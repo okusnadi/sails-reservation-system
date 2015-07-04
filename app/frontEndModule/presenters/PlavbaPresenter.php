@@ -36,7 +36,7 @@ class PlavbaPresenter extends BasePresenter
 
 		$form->addText('telefon')->setRequired()->setType('tel')
 		->setAttribute('placeholder', '123456789')
-		->addRule(Form::PATTERN, 'Telefon musí být ve správném tvaru', '^(\+)?(\d+)(\s)?(\d+)(\s)?(\d+)(\s)?(\d+)$');
+		->addRule(Form::PATTERN, 'Telefon musí být ve správném tvaru', '\+?[()\/0-9. \-]{9,}');
 
 		$form->addText('email')->setRequired()->setType('email')
 		->setAttribute('placeholder', 'jan.novak@email.cz')

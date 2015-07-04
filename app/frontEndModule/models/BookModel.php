@@ -56,6 +56,11 @@ class Book extends Base
 		$surname = ucfirst($surname);
 		$phone = str_replace(' ', '', $phone);
 
+		// validating the phone
+		if(strlen($phone) < 9) {
+			return false;
+		}
+
 		// looking for empty values
 		if(empty($name) || empty($surname) || empty($phone)
 		|| empty($email) || empty($count) || empty($date)
@@ -77,21 +82,19 @@ class Book extends Base
 		}
 
 		// inserting into clients
-		$this->database->query('
-			INSERT INTO klient(jmeno, prijmeni, telefon, email)
-			VALUES (?,?,?,?)
-			ON DUPLICATE KEY UPDATE jmeno = jmeno
-		', $name, $surname, $phone, $email);
+		$this->database
+		->query('INSERT INTO klient(jmeno, prijmeni, telefon, email) VALUES (?,?,?,?) ON DUPLICATE KEY UPDATE jmeno = jmeno', $name, $surname, $phone, $email);
 
 		// getting the id of the client just inserted
 		$client_id = $this->database->table('klient')
 		->where('email', $email)->fetch()->id_klienta;
 
 		// inserting into bookings
-		$this->database->query('
-			INSERT INTO rezervace(datum_plavby, id_klienta, pocet_lidi)
-			VALUES (?, ?, ?)
-		', $timestamp, $client_id, $count);
+		if($this->database
+		->query('INSERT INTO rezervace(datum_plavby, id_klienta, pocet_lidi) VALUES (?, ?, ?)', $timestamp, $client_id, $count)
+		->getRowCount() == 0) {
+			return false;
+		}
 
 		$sail_id = $this->database->table('rezervace')
 		->where('datum_plavby', $timestamp)->where('id_klienta', $client_id)
@@ -130,8 +133,15 @@ class Book extends Base
 	public function deleteBooking($booking_id, $email)
 	{
 		$client_id = $this->database->query('SELECT id_klienta FROM klient WHERE email = ?', $email)->fetch()->id_klienta;
-		$this->database->query('DELETE FROM rezervace WHERE id_rezervace = ? AND id_klienta = ?', $booking_id, $client_id);
-		$this->sendDeleteMail($email);
+		if(empty($client_id)) {
+			return false;
+		}
+		if($this->database->query('DELETE FROM rezervace WHERE id_rezervace = ? AND id_klienta = ?', $booking_id, $client_id)->getRowCount() > 0) {
+			$this->sendDeleteMail($email);
+		} else {
+			return false;
+		}
+		
 		return true;
 	}
 
