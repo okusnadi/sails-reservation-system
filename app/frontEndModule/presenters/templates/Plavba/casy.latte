@@ -1,0 +1,25 @@
+{block content}
+	<h2 n:block="title">Plavba {$times['date']} ({$times['day_of_the_week']|lower})</h2>
+	{if $times['passed']}
+		<p>Na proběhlé plavby už se bohužel přihlásit nemůžete. Leda, že byste měli stroj času :)</p>
+		<img width="100%" height="100%" src="{$basePath}/images/delorean.jpg" title="Back to Future" alt="Back to Future" />
+	{else}
+		<p>Zde se nachází seznam možných časů poznávacích plaveb, které se po naplnění uskuteční ve Vámi vybraném dni.
+		Stačí kliknout na požadovaný čas v levém sloupečku tabulky a dostanete se na stránku,
+		kde můžete provést rezervaci.</p><p>Pokud je na plavbě volné místo, číslo obsazenosti je zbarveno <b class="ok">zeleně</b>.
+		Pokud již na plavbě není místo, zmizí proklik na rezervaci a číslo obsazenosti se zbarví <b class="full">červeně</b>.</p>
+		<p>Pokud je obsazenost nižší než 5, loď nevyplouvá. Nebojte se ale, že přijdete a nepojedeme – jestliže se zarezervujete, dáme
+		Vám o tom, že se plavba nekoná, včas vědět telefonicky či emailem.</p>
+
+		<table class="table table-striped">
+			<thead>
+				<th>Čas</th>
+				<th>Obsazenost</th>
+			</thead>
+			<tr n:foreach="$times['times'] as $time">
+				<td><a n:tag-if="$time['obsazenost'] != $max && $time['passed'] == false" n:href="Plavba:rezervovat $times['date'], $time['time_url']">{$time['time']}</a></td>
+				<td><b class="{$time['obsazenost'] == $max ? 'full' : 'ok'}">{$time['obsazenost']}</b>/{$max}</td>
+			</tr>
+		</table>
+	{/if}
+{/block}

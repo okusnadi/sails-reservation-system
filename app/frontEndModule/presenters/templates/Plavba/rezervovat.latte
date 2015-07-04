@@ -1,0 +1,32 @@
+{block content}
+	<h2 n:block="title">Plavba {$date} v {$time|replace:'-', ':'}</h2>
+
+	<p>Pro přihlášení na tuto plavbu od Vás potřebujeme nějaké informace. Vyplňte prosím formulář níže a bude Vám zaslán email, který potvrdíte kliknutím na odkaz v něm. V případě úspěšného ověření Vám přijde finální potvrzující email, rekapitulující rezervaci.</p>
+
+	<form n:name="bookForm">
+		<div class="row">
+			<div class="col-md-2">
+				<label for="jmeno">Jméno</label><br>
+				<input n:name="jmeno" />
+			</div>
+			<div class="col-md-2">
+				<label for="prijmeni">Příjmení</label><br>
+				<input n:name="prijmeni" />
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-2">
+				<label for="telefon">Telefon</label><br>
+				<input n:name="telefon" />
+			</div>
+			<div class="col-md-2">
+				<label for="email">Email</label><br>
+				<input n:name="email" />
+			</div>
+		</div>
+		<label for="count">Počet lidí</label><br>
+		<input class="count" n:name="count" /><br>
+		<input n:name="submit" value="Odeslat" />
+		<input n:name="timestamp" value="{$date|date:'Y-m-d'} {$time|replace:'-', ':'|date:'H:i:s'}" />
+	</form>
+{/block}

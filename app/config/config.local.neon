@@ -1,0 +1,9 @@
+parameters:
+
+
+database:
+	dsn: 'mysql:host=127.0.0.1;dbname=rezervace'
+	user: root
+	password: root
+	options:
+		lazy: yes

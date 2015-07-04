@@ -1,0 +1,36 @@
+{block content}
+<div class="row">
+		<div class="col-md-6">
+			<h3 n:block="title">Výběr plavby</h3>
+			<table class="table table-striped uvod">
+				<thead>
+					<th>Datum</th>
+					<th>Den</th>
+					<th>Vyplouváme v</th>
+				</thead>
+				<tr n:foreach="$sails as $sail">
+					<td><a n:href="Plavba:casy $sail['date_url']">{$sail['date']}</a></td>
+					<td>{$sail['day_of_the_week']}</td>
+					<td>{$sail['sail_times']}</td>
+				</tr>
+			</table>
+		</div>
+		<div class="col-md-6 uvodnik">
+			<h3>O rezervacích</h3>
+			<p>V rámci této podstránky se můžete zarezervovat na jednotlivé časy plaveb v dané dny. Vlevo vidíte
+			seznam všech plaveb až do konce sezóny. Plavby v týdnu se konají v časech 14:55, 16:00 a 17:00. Plavby
+			o víkendu zase od 10:00 do 17:00 po hodině.</p>
+			<p>Jakmile si vyberete termín, stačí kliknout na datum plavby a dostanete se do výběru času plavby. Tam 
+			rovněž najdete další instrukce. Nyní stačí kliknout na požadovaný čas v levém sloupečku tabulky a dostanete
+			se na finální podstránku, kde můžete provést rezervaci pod svým jménem.</p>
+			<p>Pokud je na plavbě volné místo, číslo obsazenosti je zbarveno <b class="ok">zeleně</b>. Pokud již na plavbě
+			není místo, zmizí proklik na rezervaci a číslo obsazenosti se zbarví <b class="full">červeně</b>. Pokud je
+			obsazenost nižší než 5, loď nevyplouvá. Nebojte se ale, že přijdete a nepojedeme – jestliže se zarezervujete,
+			dáme Vám o tom, že se plavba nekoná, včas vědět telefonicky či emailem.</p>
+			<p>Pro přihlášení na plavbu od Vás také potřebujeme nějaké informace. Vyplníte formulář na finální stránce a bude
+			Vám zaslán email, který potvrdíte kliknutím na odkaz v něm. V případě úspěšného ověření Vám přijde potvrzující email,
+			rekapitulující rezervaci.</p>
+			<a href="{$basePath}/images/rezervace-img1.jpg"><img src="{$basePath}/images/rezervace-img1.jpg" width="100%" height="100%" title="Rezervace – Ololoď" alt="Rezervace – Ololoď" /></a>
+		</div>
+	</div>
+{/block}
