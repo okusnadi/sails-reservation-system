@@ -43,7 +43,6 @@ class Book extends Base
 		$mailer = new SmtpMailer(array(
 	        'host' => 'mail.gigaserver.cz',
 	        'username' => 'info@plavbyolomouc.cz',
-	        'password' => 'wu6raCet',
 	        'secure' => 'ssl',
 		));
 		$mailer->send($mail);
